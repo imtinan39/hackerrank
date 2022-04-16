@@ -1,0 +1,63 @@
+
+#include <iostream>
+#include <vector>
+using namespace std;
+   int nodes,edges,c,t;
+   long long ans,x,y,x1,y1;
+    vector <int> adj[1000000];
+    bool visited[1000000];
+
+    void dfs(int s) {
+        c++;
+        visited[s] = true;
+        for(int i = 0;i < adj[s].size();++i)    {
+         if(visited[adj[s][i]] == false)
+         {
+             dfs(adj[s][i]);
+             
+         }
+        }
+    }
+
+    void initialize() {
+        for(int i = 0;i <=nodes;++i)
+        {
+         visited[i] = false;
+         adj[i].clear();
+         ans=0;
+        }
+    }
+
+    int main() {
+        
+        cin>>t;
+        while(t--)
+        {
+        initialize();     
+        cin >> nodes;                       //Number of nodes
+        cin >> edges;   
+        cin>>x;
+        cin>>y;
+        
+        //Number of edges
+        for(int i = 0;i < edges;++i) {
+         cin >> x1>> y1;     
+     //Undirected Graph 
+         adj[x1].push_back(y1);                   //Edge from vertex x to vertex y
+         adj[y1].push_back(x1);                   //Edge from vertex y to vertex x
+        }
+
+                              //Initialize all nodes as not visited
+
+        for(int i = 1;i <= nodes;++i) {
+         if(visited[i] == false)     {
+             c=0;
+             dfs(i);
+             ans+=min(x+(c-1)*y,c*x);
+         }
+        }
+        cout<<ans<<endl;
+        
+        
+        }
+    }
